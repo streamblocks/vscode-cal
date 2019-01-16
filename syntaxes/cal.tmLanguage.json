@@ -1,0 +1,248 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "CAL Language Actor",
+	"scopeName": "source.cal",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#namespace"
+		},
+		{
+			"include": "#actor"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.cal"
+						}
+					},
+					"match": "/\\*\\*/",
+					"name": "comment.block.empty.cal"
+				},
+				{
+					"include": "#comments-inline"
+				}
+			]
+		},
+		"comments-inline": {
+			"patterns": [
+				{
+					"begin": "/\\*",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.comment.cal"
+						}
+					},
+					"end": "\\*/",
+					"name": "comment.block.cal"
+				},
+				{
+					"begin": "(^[ \\t]+)?(?=//)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.whitespace.comment.leading.cal"
+						}
+					},
+					"end": "(?!\\G)",
+					"patterns": [
+						{
+							"begin": "//",
+							"beginCaptures": {
+								"0": {
+									"name": "punctuation.definition.comment.cal"
+								}
+							},
+							"end": "\\n",
+							"name": "comment.line.double-slash.cal"
+						}
+					]
+				}
+			]
+		},
+		"namespace": {
+			"name": "meta.namespace.cal",
+			"begin": "\\b(namespace)\\b\\s+(\\w+)\\s*(:)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				},
+				"2": {
+					"name": "constant.other.cal"
+				},
+				"3": {
+					"name": "punctuation.terminator.namesapce.cal"
+				}
+			},
+			"end": "\\b(end)\\b\\s",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#imports"
+				},
+				{
+					"include": "#actor"
+				}
+			]
+		},
+		"imports": {
+			"begin": "\\b(import)\\b\\s*\\b(all)?\\b\\s",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.other.import.cal"
+				},
+				"2": {
+					"name": "storage.modifier.all.cal"
+				}
+			},
+			"end": "\\s*(;)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.terminator.cal"
+				}
+			},
+			"name": "meta.import.cal",
+			"contentName": "storage.modifier.import.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"match": "(?<=\\.)\\s*\\.|\\.(?=\\s*;)",
+					"name": "invalid.illegal.character_not_allowed_here.cal"
+				},
+				{
+					"match": "(?<!\\.)\\s*\\*",
+					"name": "invalid.illegal.character_not_allowed_here.cal"
+				},
+				{
+					"match": "(?<!_)_(?=\\s*(\\.|;))|\\b\\d+|-+",
+					"name": "invalid.illegal.character_not_allowed_here.cal"
+				},
+				{
+					"match": "(?x)\\b(?<!\\$)(action | actor | all | and | any | begin | const | div | do |dom | else | elsif | end | endaction | endactor | endchoose | endforeach | endfunction | endif | endinitialize | endlambda | endlet | endpriority | endproc | entity | endprocedure | endschedule | endwhile  | false | for | foreach | fsm | function | guard | if | import | in | initialize | lambda | let | map | mod | multi | mutable | namepsace | not | null | old | or | priority | proc | procedure | regexp | repeat | rng | schedule | then | time | true  | while | network | entities | structure | external)\\b",
+					"name": "invalid.illegal.character_not_allowed_here.cal"
+				},
+				{
+					"match": "\\.",
+					"name": "markup.italic.cal"
+				},
+				{
+					"match": "\\*",
+					"name": "variable.language.wildcard.cal"
+				}
+			]
+		},
+		"actor": {
+			"name": "meta.actor.cal",
+			"begin": "\\b(actor)\\b\\s+(\\w+)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				},
+				"2": {
+					"name": "entity.name.type.actor.cal"
+				}
+			},
+			"end": "\\b(end)\\b\\s",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#function"
+				}
+			]
+		},
+		"function": {
+			"begin": "(?x)  \\s*  \\b(function)\\s+ (?=[[:alpha:]_][[:word:]]* \\s* \\()",
+			"end": "\\b(end)\\b\\s",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				}
+			},
+			"endCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				}
+			},
+			"name": "meta.function.cal",
+			"patterns": [
+				{
+					"include": "#function-def-name"
+				},
+				{
+					"include": "#parens"
+				}
+			]
+		},
+		"function-def-name": {
+			"patterns": [
+				{
+					"name": "entity.name.function.cal",
+					"match": "(?x)  \\b ([[:alpha:]_]\\w*) \\b"
+				}
+			]
+		},
+		"parens": {
+			"patterns": [
+				{
+					"begin": "\\(",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.cal"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.cal"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#comments"
+						}
+					]
+				},
+				{
+					"begin": "\\[",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.cal"
+						}
+					},
+					"end": "\\]",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.cal"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#comments"
+						}
+					]
+				}
+			]
+		}
+	}
+}

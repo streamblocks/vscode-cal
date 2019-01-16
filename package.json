@@ -1,0 +1,41 @@
+{
+    "name": "cal",
+    "displayName": "cal",
+    "description": "CAL Actor Language support",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.30.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/streamblocks/streamblocks-vscode-cal"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "cal",
+                "aliases": [
+                    "CAL Actor Language",
+                    "CAL",
+                    "cal"
+                ],
+                "extensions": [
+                    ".cal",
+                    ".nl",
+                    ".CAL"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "cal",
+                "scopeName": "source.cal",
+                "path": "./syntaxes/cal.tmLanguage.json"
+            }
+        ]
+    }
+}
