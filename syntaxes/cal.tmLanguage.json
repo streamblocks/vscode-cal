@@ -314,7 +314,7 @@
 				}
 			},
 			"end": ";",
-			"name": "keyword.punctuation.struct_line.cal",
+			"name": "meta.network.structure.line.cal",
 			"patterns": [
 				{
 					"include": "#comments"
@@ -379,7 +379,33 @@
 			},
 			"name": "meta.priority.cal",
 			"patterns": [
-
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#priotity-line"
+				}
+			]
+		},
+		"priotity-line":{
+			"begin": "\\w*(\\.\\w*)*?\\s*(>)\\s*(\\w*(\\.\\w*)*?)",
+			"beginCaptures": {
+				"1": {
+					"name": "string.unquoted.instance.cal"
+				},
+				"2": {
+					"name": "keyword.control.cal"
+				},
+				"3": {
+					"name": "string.unquoted.instance.cal"
+				}
+			},
+			"end": ";",
+			"name": "meta.priority.line.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				}
 			]
 		},
 		"function": {
