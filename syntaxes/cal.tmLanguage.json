@@ -163,24 +163,31 @@
 		},
 		"actor": {
 			"name": "meta.actor.cal",
-			"begin": "\\b(actor)\\b\\s+(\\w+)",
-			"beginCaptures": {
-				"1": {
-					"name": "keyword.source.cal"
-				},
-				"2": {
-					"name": "entity.name.type.actor.cal"
-				}
-			},
-			"end": "\\b(end|endactor)\\b\\s",
+			"begin": "(?=\\w?[\\w\\s]*\\b(?:actor)\\s+\\w+)",
+			"end": "\\b(end|endactor)\\b",
 			"endCaptures": {
-				"1": {
+				"0": {
 					"name": "keyword.source.cal"
 				}
 			},
 			"patterns": [
 				{
-					"include": "#parameters"
+					"captures": {
+						"1": {
+							"name": "keyword.source.cal"
+						},
+						"2": {
+							"name": "entity.name.type.actor.cal"
+						}
+					},
+					"match": "(actor)\\s+(\\w+)",
+					"name": "meta.actor.identifier.cal"
+				},
+				{
+					"include": "#arguments"
+				},
+				{
+					"include": "#entity-ports"
 				},
 				{
 					"include": "#comments"
@@ -199,6 +206,67 @@
 				},
 				{
 					"include": "#priority"
+				}
+			]
+		},
+		"arguments": {
+			"name": "meta.arguments.cal",
+			"begin": "\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.arguments.begin.bracket.round.cal"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.arguments.end.bracket.round.cal"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#types"
+				},
+				{
+					"match": "\\w+",
+					"name": "variable.parameter.cal"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.delimiter.java"
+				}
+			]
+		},
+		"entity-ports": {
+			"name": "meta.entity.ports.cal",
+			"begin": "(?<=\\))",
+			"end": "(\\:)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.entity-ports.end.cal"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#types"
+				},
+				{
+					"match": "\\w+",
+					"name": "variable.parameter.cal"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.delimiter.java"
+				},
+				{
+					"match": "(==>)",
+					"name": "keyword.control.cal"
 				}
 			]
 		},
@@ -370,7 +438,7 @@
 				}
 			]
 		},
-		"action-guard":{
+		"action-guard": {
 			"name": "meta.action.guard.cal",
 			"begin": "(?x) \\b(guard)\\b \\s*",
 			"beginCaptures": {
@@ -386,7 +454,7 @@
 			]
 		},
 		"priority": {
-			"begin": "(?x) \\b(priority)\\b",
+			"begin": "(?x) \\b(priority)\\b \\s+",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.source.cal"
@@ -456,8 +524,8 @@
 			]
 		},
 		"procedure": {
-			"begin": "(?x)  \\s*  \\b(procedure)\\s+ (?=[[:alpha:]_][[:word:]]* \\s* \\()",
-			"end": "\\b(end)\\b\\s",
+			"begin": "(?x) \\b(procedure)\\s+ (?=[[:alpha:]_][[:word:]]* \\s* \\()",
+			"end": "\\b(end)\\b",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.source.cal"
@@ -550,6 +618,14 @@
 				},
 				{
 					"include": "#comments"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"match": "\\b(\\w+\\s+)\\b",
+					"name": "storage.type.primitive.cal"
 				}
 			]
 		}
