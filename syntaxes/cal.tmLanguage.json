@@ -193,6 +193,16 @@
 					"include": "#comments"
 				},
 				{
+					"include": "#actor-body"
+				}
+			]
+		},
+		"actor-body":{
+			"name": "meta.actor.body.cal",
+			"begin": "(?<=\\:)",
+			"end": "\\.*(?=(\\b(end)\\b))",
+			"patterns": [
+				{
 					"include": "#function"
 				},
 				{
@@ -242,7 +252,7 @@
 		},
 		"entity-ports": {
 			"name": "meta.entity.ports.cal",
-			"begin": "(?<=\\))",
+			"begin": "(?<=\\))\\s*",
 			"end": "(\\:)",
 			"endCaptures": {
 				"0": {
