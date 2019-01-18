@@ -272,7 +272,7 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#parameters"	
+					"include": "#parameters"
 				}
 			]
 		},
@@ -323,7 +323,7 @@
 		},
 		"process-body": {
 			"name": "meta.actor.process.body.cal",
-			"begin": "(repeat|do)\\s*",
+			"begin": "\\b(repeat|do)\\b\\s*",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.source.cal"
@@ -342,7 +342,7 @@
 			]
 		},
 		"action": {
-			"begin": "\\s*([a-zA-Z0-9_]+:)?\\s*\\b(action|initialize)\\b\\s",
+			"begin": "(?x) (\\w+(?:\\.\\w+)* \\s*:)?  \\s* \\b(action|initialize)\\b \\s",
 			"beginCaptures": {
 				"1": {
 					"name": "string.unquoted.action.name.cal"
@@ -361,11 +361,32 @@
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#action-guard"
+				},
+				{
+					"include": "#procedure-body"
 				}
 			]
 		},
-		"priority":{
-			"begin": "(?x)  \\s*  \\b(priority)\\s+",
+		"action-guard":{
+			"name": "meta.action.guard.cal",
+			"begin": "(?x) \\b(guard)\\b \\s*",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				}
+			},
+			"end": "\\.*(?=(\\b(end|do)\\b))",
+			"patterns": [
+				{
+					"include": "#comments"
+				}
+			]
+		},
+		"priority": {
+			"begin": "(?x) \\b(priority)\\b",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.source.cal"
@@ -387,8 +408,8 @@
 				}
 			]
 		},
-		"priotity-line":{
-			"begin": "\\w*(\\.\\w*)*?\\s*(>)\\s*(\\w*(\\.\\w*)*?)",
+		"priotity-line": {
+			"begin": "(?x) (\\w+(?:\\.\\w+)*) \\s* (>) \\s* (\\w+(?:\\.\\w+)*) ",
 			"beginCaptures": {
 				"1": {
 					"name": "string.unquoted.instance.cal"
@@ -480,7 +501,7 @@
 		},
 		"procedure-body": {
 			"name": "meta.procedure.body.cal",
-			"begin": "(?x) \\b(begin)\\b\\s*",
+			"begin": "(?x) \\b(begin|do)\\b\\s*",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.source.cal"
