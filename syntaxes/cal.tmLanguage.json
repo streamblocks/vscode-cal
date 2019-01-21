@@ -100,6 +100,9 @@
 					"include": "#imports"
 				},
 				{
+					"include": "#variables"
+				},
+				{
 					"include": "#actor"
 				},
 				{
@@ -204,6 +207,9 @@
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#variables"
 				},
 				{
 					"include": "#function"
@@ -666,6 +672,9 @@
 				},
 				{
 					"include": "#local-variable-declaration"
+				},
+				{
+					"include": "#code"
 				}
 			]
 		},
@@ -710,6 +719,12 @@
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#variables"
+				},
+				{
+					"include": "#numbers"
 				}
 			]
 		},
@@ -872,6 +887,27 @@
 				{
 					"match": "\\b(do)\\b",
 					"name": "keyword.control.cal"
+				}
+			]
+		},
+		"variables": {
+			"begin": "(?x)\n(?=\n  (\n    \\b(void|boolean|byte|char|short|int|float|long|double)\\b\n    |\n    (?>(\\w+\\.)*[A-Z]+\\w*) # e.g. `javax.ws.rs.Response`, or `String`\n  )\n  (\n    <[\\w<>,\\.?\\s\\[\\]]*> # e.g. `HashMap<Integer, String>`, or `List<java.lang.String>`\n  )?\n  (\n    (\\[\\])* # int[][]\n  )?\n  \\s+\n  [A-Za-z_$][\\w$]* # At least one identifier after space\n  ([\\w\\[\\],$][\\w\\[\\],\\s]*)? # possibly primitive array or additional identifiers\n  \\s*(=|:|;)\n)",
+			"end": "(?=\\=|:|;|,)",
+			"name": "meta.definition.variable.cal",
+			"patterns": [
+				{
+					"match": "([A-Za-z$_][\\w$]*)(?=\\s*(\\[\\])*\\s*(;|:|=|,))",
+					"captures": {
+						"1": {
+							"name": "variable.other.definition.cal"
+						}
+					}
+				},
+				{
+					"include": "#types"
+				},
+				{
+					"include": "#code"
 				}
 			]
 		},
