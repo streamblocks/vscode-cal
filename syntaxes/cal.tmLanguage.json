@@ -505,28 +505,12 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#priotity-line"
-				}
-			]
-		},
-		"priotity-line": {
-			"begin": "(?x) (\\w+(?:\\.\\w+)*) \\s* (>) \\s* (\\w+(?:\\.\\w+)*) ",
-			"beginCaptures": {
-				"1": {
-					"name": "string.unquoted.instance.cal"
+					"match": "(\\w+(?:\\.\\w+)*)",
+					"name" : "string.unquoted.instance.cal"
 				},
-				"2": {
-					"name": "keyword.control.cal"
-				},
-				"3": {
-					"name": "string.unquoted.instance.cal"
-				}
-			},
-			"end": ";",
-			"name": "meta.priority.line.cal",
-			"patterns": [
 				{
-					"include": "#comments"
+					"match": "(>)",
+					"name":"keyword.control.cal"
 				}
 			]
 		},
