@@ -203,6 +203,9 @@
 			"end": "\\.*(?=(\\b(end)\\b))",
 			"patterns": [
 				{
+					"include": "#comments"
+				},
+				{
 					"include": "#function"
 				},
 				{
@@ -216,6 +219,9 @@
 				},
 				{
 					"include": "#priority"
+				},
+				{
+					"include": "#schedule"
 				}
 			]
 		},
@@ -325,6 +331,9 @@
 					"include": "#comments"
 				},
 				{
+					"include": "#local-variable-declaration"
+				},
+				{
 					"include": "#function"
 				},
 				{
@@ -391,11 +400,24 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#network-structure-line"
+					"include": "#network-structure-statements"
 				}
 			]
 		},
-		"network-structure-line": {
+		"network-structure-statements": {
+			"patterns": [
+				{
+					"include": "#network-structure-statement"
+				},
+				{
+					"include": "#network-structure-statement-if"
+				},
+				{
+					"include": "#network-structure-statement-for"
+				}
+			]
+		},
+		"network-structure-statement": {
 			"begin": "((?:[a-zA-Z0-9_]+)\\.)*([a-zA-Z0-9_]+)\\s*(-->)\\s*((?:[a-zA-Z0-9_]+)\\.)*([a-zA-Z0-9_]+)",
 			"beginCaptures": {
 				"1": {
@@ -415,10 +437,64 @@
 				}
 			},
 			"end": ";",
-			"name": "meta.network.structure.line.cal",
+			"name": "meta.network.structure.statement.cal",
 			"patterns": [
 				{
 					"include": "#comments"
+				}
+			]
+		},
+		"network-structure-statement-if": {
+			"begin": "\\b(if)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"end": "\\b(end|endif)\\b",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"name": "meta.network.strcutre.statement.if.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#network-structure-statements"
+				},
+				{
+					"match": "\\b(then|else)\\b",
+					"name": "keyword.control.cal"
+				}
+			]
+		},
+		"network-structure-statement-for": {
+			"begin": "\\b(for)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"end": "\\b(end|endfor)\\b",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"name": "meta.network.strcutre.statement.for.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#network-structure-statements"
+				},
+				{
+					"match": "\\b(do)\\b",
+					"name": "keyword.control.cal"
 				}
 			]
 		},
@@ -439,6 +515,9 @@
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#code"
 				}
 			]
 		},
@@ -467,6 +546,9 @@
 					"include": "#action-guard"
 				},
 				{
+					"include": "#local-variable-declaration"
+				},
+				{
 					"include": "#procedure-body"
 				}
 			]
@@ -479,10 +561,13 @@
 					"name": "keyword.source.cal"
 				}
 			},
-			"end": "\\.*(?=(\\b(end|do)\\b))",
+			"end": "\\.*(?=(\\b(end|do|var)\\b))",
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#numbers"
 				}
 			]
 		},
@@ -506,11 +591,55 @@
 				},
 				{
 					"match": "(\\w+(?:\\.\\w+)*)",
-					"name" : "string.unquoted.instance.cal"
+					"name": "string.unquoted.action.tag.cal"
 				},
 				{
 					"match": "(>)",
-					"name":"keyword.control.cal"
+					"name": "keyword.control.cal"
+				}
+			]
+		},
+		"schedule": {
+			"name": "meta.schedule.cal",
+			"begin": "(schedule)\\s*(fsm)?\\s+(\\w+)\\s*:",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				},
+				"2": {
+					"name": "variable.language.cal"
+				},
+				"3": {
+					"name": "constant.numeric.cal"
+				}
+			},
+			"end": "(?x) \\b(end | endschedule)\\b\\s",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.source.cal"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"match": "([a-zA-Z0-9_]+)",
+					"name": "constant.numeric.cal"
+				},
+				{
+					"begin": "\\(",
+					"end": "\\)",
+					"patterns": [
+						{
+							"match": "(\\w+(?:\\.\\w+)*)",
+							"name": "string.other.action.tag.cal"
+						}
+					]
+				},
+				{
+					"match": "(-->)",
+					"name": "keyword.control.cal"
 				}
 			]
 		},
@@ -577,7 +706,7 @@
 					"name": "keyword.source.cal"
 				}
 			},
-			"end": "\\.*(?=(\\b(end|begin|guard|:)\\b))",
+			"end": "\\.*(?=(\\b(end|begin|guard|do|:|entities)\\b))",
 			"patterns": [
 				{
 					"include": "#comments"
@@ -596,6 +725,9 @@
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#code"
 				}
 			]
 		},
@@ -643,6 +775,123 @@
 				{
 					"match": "\\b(\\w+\\s+)\\b",
 					"name": "storage.type.primitive.cal"
+				}
+			]
+		},
+		"code": {
+			"patterns": [
+				{
+					"include": "#numbers"
+				},
+				{
+					"include": "#block-if"
+				},
+				{
+					"include": "#block-while"
+				},
+				{
+					"include": "#block-foreach"
+				}
+			]
+		},
+		"block-foreach": {
+			"begin": "\\b(foreach)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"end": "\\b(end|endforeach)\\b\\s",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"name": "meta.block.foreach.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#code"
+				},
+				{
+					"match": "\\b(do)\\b",
+					"name": "keyword.control.cal"
+				}
+			]
+		},
+		"block-if": {
+			"begin": "\\b(if)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"end": "\\b(end|endif)\\b",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"name": "meta.block.if.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#code"
+				},
+				{
+					"match": "\\b(then|else)\\b",
+					"name": "keyword.control.cal"
+				}
+			]
+		},
+		"block-while": {
+			"begin": "\\b(while)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"end": "\\b(end|endwhile)\\b\\s",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"name": "meta.block.while.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#code"
+				},
+				{
+					"match": "\\b(do)\\b",
+					"name": "keyword.control.cal"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"match": "(?x)\n\\b(?<!\\$)\n0(x|X)\n(\n  (?<!\\.)[0-9a-fA-F]([0-9a-fA-F_]*[0-9a-fA-F])?[Ll]?(?!\\.)\n  |\n  (\n    [0-9a-fA-F]([0-9a-fA-F_]*[0-9a-fA-F])?\\.?\n    |\n    ([0-9a-fA-F]([0-9a-fA-F_]*[0-9a-fA-F])?)?\\.[0-9a-fA-F]([0-9a-fA-F_]*[0-9a-fA-F])?\n  )\n  [Pp][+-]?[0-9]([0-9_]*[0-9])?[FfDd]?\n)\n\\b(?!\\$)",
+					"name": "constant.numeric.hex.cal"
+				},
+				{
+					"match": "\\b(?<!\\$)0(b|B)[01]([01_]*[01])?[Ll]?\\b(?!\\$)",
+					"name": "constant.numeric.binary.cal"
+				},
+				{
+					"match": "\\b(?<!\\$)0[0-7]([0-7_]*[0-7])?[Ll]?\\b(?!\\$)",
+					"name": "constant.numeric.octal.cal"
+				},
+				{
+					"match": "(?x)\n(?<!\\$)\n(\n  \\b[0-9]([0-9_]*[0-9])?\\.\\B(?!\\.)\n  |\n  \\b[0-9]([0-9_]*[0-9])?\\.([Ee][+-]?[0-9]([0-9_]*[0-9])?)[FfDd]?\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?\\.([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?\\.([0-9]([0-9_]*[0-9])?)([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]?\\b\n  |\n  (?<!\\.)\\B\\.[0-9]([0-9_]*[0-9])?([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]?\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?([Ee][+-]?[0-9]([0-9_]*[0-9])?)[FfDd]?\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]\\b\n  |\n  \\b(0|[1-9]([0-9_]*[0-9])?)(?!\\.)[Ll]?\\b\n)\n(?!\\$)",
+					"name": "constant.numeric.decimal.cal"
 				}
 			]
 		}
