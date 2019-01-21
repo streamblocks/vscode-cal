@@ -197,7 +197,7 @@
 				}
 			]
 		},
-		"actor-body":{
+		"actor-body": {
 			"name": "meta.actor.body.cal",
 			"begin": "(?<=\\:)",
 			"end": "\\.*(?=(\\b(end)\\b))",
@@ -282,27 +282,50 @@
 		},
 		"network": {
 			"name": "meta.network.cal",
-			"begin": "\\b(network)\\b\\s+(\\w+)",
-			"beginCaptures": {
-				"1": {
-					"name": "keyword.source.cal"
-				},
-				"2": {
-					"name": "entity.name.type.network.cal"
-				}
-			},
-			"end": "\\b(end)\\b\\s",
+			"begin": "(?=\\w?[\\w\\s]*\\b(?:network)\\s+\\w+)",
+			"end": "\\b(end|endnetwork)\\b",
 			"endCaptures": {
-				"1": {
+				"0": {
 					"name": "keyword.source.cal"
 				}
 			},
 			"patterns": [
 				{
+					"captures": {
+						"1": {
+							"name": "keyword.source.cal"
+						},
+						"2": {
+							"name": "entity.name.type.network.cal"
+						}
+					},
+					"match": "(network)\\s+(\\w+)",
+					"name": "meta.network.identifier.cal"
+				},
+				{
+					"include": "#arguments"
+				},
+				{
+					"include": "#entity-ports"
+				},
+				{
 					"include": "#comments"
 				},
 				{
-					"include": "#local-variable-declaration"
+					"include": "#network-body"
+				}
+			]
+		},
+		"network-body": {
+			"name": "meta.network.body.cal",
+			"begin": "(?<=\\:)",
+			"end": "\\.*(?=(\\b(end)\\b))",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#function"
 				},
 				{
 					"include": "#network-entities"
