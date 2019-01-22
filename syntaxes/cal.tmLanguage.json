@@ -175,6 +175,9 @@
 			},
 			"patterns": [
 				{
+					"include": "#storage-modifiers"
+				},
+				{
 					"captures": {
 						"1": {
 							"name": "keyword.source.cal"
@@ -279,8 +282,7 @@
 					"include": "#types"
 				},
 				{
-					"match": "\\w+",
-					"name": "variable.parameter.cal"
+					"include": "#variables"
 				},
 				{
 					"match": ",",
@@ -302,6 +304,9 @@
 				}
 			},
 			"patterns": [
+				{
+					"include": "#storage-modifiers"
+				},
 				{
 					"captures": {
 						"1": {
@@ -509,15 +514,15 @@
 			"begin": "\\b(repeat|do)\\b\\s*",
 			"beginCaptures": {
 				"1": {
-					"name": "keyword.source.cal"
-				}
-			},
-			"endCaptures": {
-				"1": {
-					"name": "keyword.source.cal"
+					"name": "keyword.control.cal"
 				}
 			},
 			"end": "\\b(end)\\b\\s",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
 			"patterns": [
 				{
 					"include": "#comments"
@@ -770,7 +775,7 @@
 			},
 			"patterns": [
 				{
-					"match": "(?x)  ([[:alpha:]_]\\w*)    \\s* (?: (,) | (?=[)]))",
+					"match": "(?x)  ([[:alpha:]_]\\w*)    \\s* (?: (,) | (=) | (?=[)]))",
 					"captures": {
 						"1": {
 							"name": "variable.parameter.function.language.cal"
@@ -782,19 +787,25 @@
 				},
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#code"
 				}
 			]
 		},
 		"types": {
 			"patterns": [
 				{
-					"match": "\\b(\\w+\\s+)\\b",
+					"match": "\\b([A-Za-z]\\w*\\s)\\b",
 					"name": "storage.type.primitive.cal"
 				}
 			]
 		},
 		"code": {
 			"patterns": [
+				{
+					"include": "#parens"
+				},
 				{
 					"include": "#numbers"
 				},
@@ -806,6 +817,9 @@
 				},
 				{
 					"include": "#block-foreach"
+				},
+				{
+					"include": "#keywords"
 				}
 			]
 		},
@@ -831,7 +845,7 @@
 					"include": "#code"
 				},
 				{
-					"match": "\\b(do)\\b",
+					"match": "\\b(in|do)\\b",
 					"name": "keyword.control.cal"
 				}
 			]
@@ -891,18 +905,10 @@
 			]
 		},
 		"variables": {
-			"begin": "(?x)\n(?=\n  (\n    \\b(void|boolean|byte|char|short|int|float|long|double)\\b\n    |\n    (?>(\\w+\\.)*[A-Z]+\\w*) # e.g. `javax.ws.rs.Response`, or `String`\n  )\n  (\n    <[\\w<>,\\.?\\s\\[\\]]*> # e.g. `HashMap<Integer, String>`, or `List<java.lang.String>`\n  )?\n  (\n    (\\[\\])* # int[][]\n  )?\n  \\s+\n  [A-Za-z_$][\\w$]* # At least one identifier after space\n  ([\\w\\[\\],$][\\w\\[\\],\\s]*)? # possibly primitive array or additional identifiers\n  \\s*(=|:|;)\n)",
+			"begin": "(?x)\n(?=\n  (\n    \\b(void|boolean|byte|char|short|int|uint|float|long|double)\\b\n    |\n    (?>(\\w+\\.)*[A-Z]+\\w*) # e.g. `javax.ws.rs.Response`, or `String`\n  )\n  (\n    <[\\w<>,\\.?\\s\\[\\]]*> # e.g. `HashMap<Integer, String>`, or `List<java.lang.String>`\n  )?\n  (\n    (\\[\\])* # int[][]\n  )?\n  \\s+\n  [A-Za-z_$][\\w$]* # At least one identifier after space\n  ([\\w\\[\\],$][\\w\\[\\],\\s]*)? # possibly primitive array or additional identifiers\n  \\s*(=|:|;|,)\n)",
 			"end": "(?=\\=|:|;|,)",
 			"name": "meta.definition.variable.cal",
 			"patterns": [
-				{
-					"match": "([A-Za-z$_][\\w$]*)(?=\\s*(\\[\\])*\\s*(;|:|=|,))",
-					"captures": {
-						"1": {
-							"name": "variable.other.definition.cal"
-						}
-					}
-				},
 				{
 					"include": "#types"
 				},
@@ -928,6 +934,92 @@
 				{
 					"match": "(?x)\n(?<!\\$)\n(\n  \\b[0-9]([0-9_]*[0-9])?\\.\\B(?!\\.)\n  |\n  \\b[0-9]([0-9_]*[0-9])?\\.([Ee][+-]?[0-9]([0-9_]*[0-9])?)[FfDd]?\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?\\.([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?\\.([0-9]([0-9_]*[0-9])?)([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]?\\b\n  |\n  (?<!\\.)\\B\\.[0-9]([0-9_]*[0-9])?([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]?\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?([Ee][+-]?[0-9]([0-9_]*[0-9])?)[FfDd]?\\b\n  |\n  \\b[0-9]([0-9_]*[0-9])?([Ee][+-]?[0-9]([0-9_]*[0-9])?)?[FfDd]\\b\n  |\n  \\b(0|[1-9]([0-9_]*[0-9])?)(?!\\.)[Ll]?\\b\n)\n(?!\\$)",
 					"name": "constant.numeric.decimal.cal"
+				}
+			]
+		},
+		"storage-modifiers": {
+			"patterns": [
+				{
+					"match": "\\b(external)\\b",
+					"name": "storage.modifier.cal"
+				}
+			]
+		},
+		"parens": {
+			"patterns": [
+				{
+					"begin": "\\(",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.java"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.round.java"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				},
+				{
+					"begin": "\\[",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.java"
+						}
+					},
+					"end": "\\]",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.square.java"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"match": "(<<|>>>?|~|\\^)",
+					"name": "keyword.operator.bitwise.java"
+				},
+				{
+					"match": "((&|\\^|\\||<<|>>>?)=)",
+					"name": "keyword.operator.assignment.bitwise.java"
+				},
+				{
+					"match": "(===?|!=|<=|>=|<>|<|>)",
+					"name": "keyword.operator.comparison.java"
+				},
+				{
+					"match": "([+*/%-]=)",
+					"name": "keyword.operator.assignment.arithmetic.java"
+				},
+				{
+					"match": "(=|:=)",
+					"name": "keyword.operator.assignment.java"
+				},
+				{
+					"match": "(\\-|\\+|\\*|\\/|%)",
+					"name": "keyword.operator.arithmetic.java"
+				},
+				{
+					"match": "(!|&&|\\|\\|)",
+					"name": "keyword.operator.logical.java"
+				},
+				{
+					"match": "(\\||&)",
+					"name": "keyword.operator.bitwise.java"
 				}
 			]
 		}
