@@ -123,7 +123,6 @@
 				}
 			},
 			"name": "meta.package.java",
-			
 			"patterns": [
 				{
 					"include": "#comments"
@@ -180,9 +179,6 @@
 					"include": "#imports"
 				},
 				{
-					"include": "#variables"
-				},
-				{
 					"include": "#actor"
 				},
 				{
@@ -193,6 +189,9 @@
 				},
 				{
 					"include": "#procedure"
+				},
+				{
+					"include": "#code"
 				}
 			]
 		},
@@ -291,9 +290,6 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#variables"
-				},
-				{
 					"include": "#function"
 				},
 				{
@@ -310,6 +306,9 @@
 				},
 				{
 					"include": "#schedule"
+				},
+				{
+					"include": "#code"
 				}
 			]
 		},
@@ -328,16 +327,6 @@
 				}
 			},
 			"patterns": [
-				{
-					"include": "#comments"
-				},
-				{
-					"include": "#types"
-				},
-				{
-					"match": ",",
-					"name": "punctuation.separator.delimiter.java"
-				},
 				{
 					"include": "#code"
 				}
@@ -358,9 +347,6 @@
 				},
 				{
 					"include": "#types"
-				},
-				{
-					"include": "#variables"
 				},
 				{
 					"match": ",",
@@ -732,35 +718,6 @@
 				}
 			]
 		},
-		"function-old": {
-			"begin": "(?x)  \\s*  \\b(function)\\s+ (?=[[:alpha:]_][[:word:]]* \\s* \\()",
-			"end": "\\b(end|endfunction)\\b\\s",
-			"beginCaptures": {
-				"1": {
-					"name": "keyword.source.cal"
-				}
-			},
-			"endCaptures": {
-				"1": {
-					"name": "keyword.source.cal"
-				}
-			},
-			"name": "meta.function.cal",
-			"patterns": [
-				{
-					"include": "#callable-def-name"
-				},
-				{
-					"include": "#parameters"
-				},
-				{
-					"include": "#local-variable-declaration"
-				},
-				{
-					"include": "#code"
-				}
-			]
-		},
 		"local-variable-declaration": {
 			"name": "meta.local.variables.declaration.cal",
 			"begin": "(?x) \\b(var)\\b \\s*",
@@ -775,10 +732,7 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#variables"
-				},
-				{
-					"include": "#numbers"
+					"include": "#code"
 				}
 			]
 		},
@@ -821,7 +775,7 @@
 				}
 			]
 		},
-		"function-output-port":{
+		"function-output-port": {
 			"name": "meta.function.output.port.cal",
 			"begin": "(-->)",
 			"beginCaptures": {
@@ -839,35 +793,6 @@
 				},
 				{
 					"include": "#local-variable-declaration"
-				}
-			]
-		},
-		"procedure-old": {
-			"begin": "(?x) \\b(procedure)\\s+ (?=[[:alpha:]_][[:word:]]* \\s* \\()",
-			"end": "\\b(end)\\b",
-			"beginCaptures": {
-				"1": {
-					"name": "keyword.source.cal"
-				}
-			},
-			"endCaptures": {
-				"1": {
-					"name": "keyword.source.cal"
-				}
-			},
-			"name": "meta.procedure.cal",
-			"patterns": [
-				{
-					"include": "#callable-def-name"
-				},
-				{
-					"include": "#parameters"
-				},
-				{
-					"include": "#local-variable-declaration"
-				},
-				{
-					"include": "#procedure-body"
 				}
 			]
 		},
@@ -897,10 +822,10 @@
 					"name": "meta.function.identifier.cal"
 				},
 				{
-					"include": "#arguments"
+					"include": "#comments"
 				},
 				{
-					"include": "#comments"
+					"include": "#code"
 				},
 				{
 					"include": "#local-variable-declaration"
@@ -981,12 +906,6 @@
 		"code": {
 			"patterns": [
 				{
-					"include": "#callable-call"
-				},
-				{
-					"include": "#parens"
-				},
-				{
 					"include": "#numbers"
 				},
 				{
@@ -999,15 +918,21 @@
 					"include": "#block-foreach"
 				},
 				{
+					"include": "#parens"
+				},
+				{
 					"include": "#keywords"
 				},
 				{
 					"include": "#strings"
+				},
+				{
+					"include": "#callable-call"
 				}
 			]
 		},
 		"callable-call": {
-			"begin": "(\\.)?\\s*((?!while|if|int|uint|List)[A-Za-z_$][\\w$]*)\\s*(\\()",
+			"begin": "(\\.)?\\s*((?!\\b(while|if|int|uint|List|and|or|not|elsif)\\b)[A-Za-z_$][\\w$]*)\\s*(\\()",
 			"beginCaptures": {
 				"1": {
 					"name": "punctuation.separator.period.cal"
@@ -1032,7 +957,6 @@
 				}
 			]
 		},
-
 		"block-foreach": {
 			"begin": "\\b(foreach)\\b",
 			"beginCaptures": {
@@ -1128,8 +1052,8 @@
 			]
 		},
 		"variables": {
-			"begin": "(?x) (?= ( \\b(int|uint)\\b\\s+(\\(.*\\s*\\))?\\s*[A-Za-z_$][\\w$]* ) )",
-			"end": "(?=\\=|(:=)|:|;|,|(begin)|(do)",
+			"begin": "(?x) (?= ( \\b(bool|int|uint)\\b\\s*(\\(.*\\s*\\))?\\s*[A-Za-z_$][\\w$]* ) )",
+			"end": "(?=\\,|\\;|(begin)|(do)",
 			"name": "meta.definition.variable.cal",
 			"patterns": [
 				{
@@ -1213,7 +1137,7 @@
 		"keywords": {
 			"patterns": [
 				{
-					"match":"(?x) \\b(size | type | true | false | and | or | not)\\b",
+					"match": "(?x) \\b(size | type | true | false | and | or | not| List |int |uint|bool|repeat)\\b",
 					"name": "keyword.source.cal"
 				},
 				{
