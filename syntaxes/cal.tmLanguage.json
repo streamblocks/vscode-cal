@@ -639,10 +639,7 @@
 			"end": "\\.*(?=(\\b(end|do|var)\\b))",
 			"patterns": [
 				{
-					"include": "#comments"
-				},
-				{
-					"include": "#numbers"
+					"include": "#code"
 				}
 			]
 		},
@@ -783,7 +780,7 @@
 					"name": "keyword.control.cal"
 				}
 			},
-			"end": "\\.*(?=:)",
+			"end": "\\.*(?=:|end)",
 			"patterns": [
 				{
 					"include": "#comments"
