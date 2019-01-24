@@ -287,9 +287,6 @@
 			"end": "\\.*(?=(\\b(end)\\b))",
 			"patterns": [
 				{
-					"include": "#comments"
-				},
-				{
 					"include": "#function"
 				},
 				{
@@ -346,15 +343,15 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#types"
+					"match": "(==>)",
+					"name": "keyword.control.cal"
+				},
+				{
+					"include": "#code"
 				},
 				{
 					"match": ",",
 					"name": "punctuation.separator.delimiter.java"
-				},
-				{
-					"match": "(==>)",
-					"name": "keyword.control.cal"
 				}
 			]
 		},
@@ -499,7 +496,7 @@
 					"name": "string.unquoted.instance.cal"
 				},
 				"2": {
-					"name": "variable.other.tag.cal"
+					"name": "other.entity.port.cal"
 				},
 				"3": {
 					"name": "keyword.control.cal"
@@ -508,7 +505,7 @@
 					"name": "string.unquoted.instance.cal"
 				},
 				"5": {
-					"name": "variable.other.tag.cal"
+					"name": "other.entity.port.cal"
 				}
 			},
 			"end": ";",
@@ -589,9 +586,6 @@
 			},
 			"patterns": [
 				{
-					"include": "#comments"
-				},
-				{
 					"include": "#code"
 				}
 			]
@@ -616,6 +610,13 @@
 			"patterns": [
 				{
 					"include": "#comments"
+				},
+				{
+					"match": "(==>)",
+					"name": "keyword.control.cal"
+				},
+				{
+					"include": "#code"
 				},
 				{
 					"include": "#action-guard"
@@ -723,11 +724,8 @@
 					"name": "keyword.source.cal"
 				}
 			},
-			"end": "\\.*(?=((end)|(begin)|(guard)|(do)|:|(entities)))",
+			"end": "\\.*(?=((end)|(begin)|(guard)|(do)|(:\\s+)|(entities)))",
 			"patterns": [
-				{
-					"include": "#comments"
-				},
 				{
 					"include": "#code"
 				}
@@ -786,7 +784,7 @@
 					"include": "#comments"
 				},
 				{
-					"include": "#types"
+					"include": "#code"
 				},
 				{
 					"include": "#local-variable-declaration"
@@ -885,9 +883,6 @@
 					}
 				},
 				{
-					"include": "#comments"
-				},
-				{
 					"include": "#code"
 				}
 			]
@@ -902,6 +897,9 @@
 		},
 		"code": {
 			"patterns": [
+				{
+					"include": "#comments"
+				},
 				{
 					"include": "#numbers"
 				},
@@ -970,9 +968,6 @@
 			"name": "meta.block.foreach.cal",
 			"patterns": [
 				{
-					"include": "#comments"
-				},
-				{
 					"include": "#code"
 				},
 				{
@@ -997,9 +992,6 @@
 			"name": "meta.block.if.cal",
 			"patterns": [
 				{
-					"include": "#comments"
-				},
-				{
 					"include": "#code"
 				},
 				{
@@ -1023,9 +1015,6 @@
 			},
 			"name": "meta.block.while.cal",
 			"patterns": [
-				{
-					"include": "#comments"
-				},
 				{
 					"include": "#code"
 				},
