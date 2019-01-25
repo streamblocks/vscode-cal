@@ -435,26 +435,57 @@
 			]
 		},
 		"network-entities-lines": {
-			"begin": "((?:[a-zA-Z0-9_]+))\\s*(=)\\s*((?:[a-zA-Z0-9_]+))\\s*",
-			"beginCaptures": {
-				"1": {
-					"name": "string.unquoted.instance.cal"
-				},
-				"2": {
-					"name": "keyword.operator.cal"
-				},
-				"3": {
-					"name": "entity.name.type.cal"
-				}
-			},
-			"end": ";",
-			"name": "meta.network.entity.line.cal",
 			"patterns": [
 				{
-					"include": "#comments"
+					"begin": "((?:[a-zA-Z0-9_]+))\\s*(=)\\s*((?:[a-zA-Z0-9_]+))\\s*",
+					"beginCaptures": {
+						"1": {
+							"name": "string.unquoted.instance.cal"
+						},
+						"2": {
+							"name": "keyword.operator.cal"
+						},
+						"3": {
+							"name": "entity.name.type.cal"
+						}
+					},
+					"end": ";",
+					"name": "meta.network.entity.line.cal",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#parameters"
+						},
+						{
+							"include": "#code"
+						}
+					]
 				},
 				{
-					"include": "#parameters"
+					"begin": "((?:[a-zA-Z0-9_]+))\\s*(=)\\s*((?:\\[))",
+					"beginCaptures": {
+						"1": {
+							"name": "string.unquoted.instance.cal"
+						},
+						"2": {
+							"name": "keyword.operator.cal"
+						}
+					},
+					"end": ";",
+					"name": "meta.network.entity.line.generator.cal",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#parameters"
+						},
+						{
+							"include": "#code"
+						}
+					]
 				}
 			]
 		},
@@ -544,7 +575,7 @@
 			]
 		},
 		"network-structure-statement-for": {
-			"begin": "\\b(for)\\b",
+			"begin": "\\b(for|foreach)\\b",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.cal"
@@ -567,6 +598,10 @@
 				{
 					"match": "\\b(do)\\b",
 					"name": "keyword.control.cal"
+				},
+				{
+					"match": "\\b(in)\\b",
+					"name": "keyword.source.cal"
 				}
 			]
 		},
@@ -1084,13 +1119,13 @@
 					"begin": "\\(",
 					"beginCaptures": {
 						"0": {
-							"name": "punctuation.bracket.round.java"
+							"name": "punctuation.bracket.round.cal"
 						}
 					},
 					"end": "\\)",
 					"endCaptures": {
 						"0": {
-							"name": "punctuation.bracket.round.java"
+							"name": "punctuation.bracket.round.cal"
 						}
 					},
 					"patterns": [
@@ -1103,13 +1138,32 @@
 					"begin": "\\[",
 					"beginCaptures": {
 						"0": {
-							"name": "punctuation.bracket.square.java"
+							"name": "punctuation.bracket.square.cal"
 						}
 					},
 					"end": "\\]",
 					"endCaptures": {
 						"0": {
-							"name": "punctuation.bracket.square.java"
+							"name": "punctuation.bracket.square.cal"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#code"
+						}
+					]
+				},
+				{
+					"begin": "\\{",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.bracket.curly.cal"
+						}
+					},
+					"end": "\\}",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.bracket.curly.cal"
 						}
 					},
 					"patterns": [
@@ -1123,7 +1177,7 @@
 		"keywords": {
 			"patterns": [
 				{
-					"match": "(?x) \\b(size | type | true | false | and | or | not| List |int |uint|bool|repeat)\\b",
+					"match": "(?x) \\b(size | type | true | false | and | or | not| List |int | uint | bool | repeat | mod | null | bufferSize | for | in)\\b",
 					"name": "keyword.source.cal"
 				},
 				{
