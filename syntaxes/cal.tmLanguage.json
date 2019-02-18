@@ -143,7 +143,7 @@
 		},
 		"namespace": {
 			"name": "meta.namespace.cal",
-			"begin": "\\b(namespace)\\b\\s+(\\w+)\\s*(:)",
+			"begin": "\\b(namespace)\\b\\s*",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.source.namespace.cal"
@@ -245,7 +245,7 @@
 		"actor": {
 			"name": "meta.actor.cal",
 			"begin": "(?=\\w?[\\w\\s]*\\b(?:actor)\\s+\\w+)",
-			"end": "\\b(end|endactor)\\b",
+			"end": "(end|endactor|\\;)",
 			"endCaptures": {
 				"0": {
 					"name": "keyword.source.cal"
@@ -332,7 +332,7 @@
 		"entity-ports": {
 			"name": "meta.entity.ports.cal",
 			"begin": "(?<=\\))\\s*",
-			"end": "(\\:)",
+			"end": "(?=(\\:|\\;))",
 			"endCaptures": {
 				"0": {
 					"name": "punctuation.entity-ports.end.cal"
