@@ -997,7 +997,7 @@
 			]
 		},
 		"callable-call": {
-			"begin": "(\\.)?\\s*((?!\\b(while|if|int|uint|List|and|or|not|elsif|guard|lambda)\\b)[A-Za-z_$][\\w$]*)\\s*(\\()",
+			"begin": "(\\.)?\\s*((?!\\b(while|if|int|uint|List|and|or|not|elsif|guard|lambda|then|else)\\b)[A-Za-z_$][\\w$]*)\\s*(\\()",
 			"beginCaptures": {
 				"1": {
 					"name": "punctuation.separator.period.cal"
