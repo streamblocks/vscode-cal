@@ -939,6 +939,9 @@
 					"include": "#numbers"
 				},
 				{
+					"include": "#block"
+				},
+				{
 					"include": "#block-if"
 				},
 				{
@@ -1003,10 +1006,19 @@
 			"name": "meta.block.foreach.cal",
 			"patterns": [
 				{
+					"include": "#comments"
+				},
+				{
 					"include": "#code"
 				},
 				{
-					"match": "\\b(in|do)\\b",
+					"include": "#local-variable-declaration"
+				},
+				{
+					"include": "#block-body"
+				},
+				{
+					"match": "\\b(in)\\b",
 					"name": "keyword.control.cal"
 				}
 			]
@@ -1035,6 +1047,53 @@
 				}
 			]
 		},
+		"block":{
+			"begin": "\\b(begin)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"end": "\\b(end)\\b",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"name": "meta.block.cal",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#code"
+				},
+				{
+					"include": "#local-variable-declaration"
+				},
+				{
+					"include": "#block-body"
+				}
+			]
+		},
+		"block-body": {
+			"name": "meta.procedure.body.cal",
+			"begin": "(?x) (?:(do))\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.cal"
+				}
+			},
+			"end": "\\.*(?=\\b(end)\\b)",
+			"patterns": [
+				{
+					"include": "#comments"
+				},
+				{
+					"include": "#code"
+				}
+			]
+		},
 		"block-while": {
 			"begin": "\\b(while)\\b",
 			"beginCaptures": {
@@ -1051,11 +1110,16 @@
 			"name": "meta.block.while.cal",
 			"patterns": [
 				{
+					"include": "#comments"
+				},
+				{
 					"include": "#code"
 				},
 				{
-					"match": "\\b(do)\\b",
-					"name": "keyword.control.cal"
+					"include": "#local-variable-declaration"
+				},
+				{
+					"include": "#block-body"
 				}
 			]
 		},
