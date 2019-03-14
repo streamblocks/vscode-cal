@@ -36,6 +36,21 @@
                 "scopeName": "source.cal",
                 "path": "./syntaxes/cal.tmLanguage.json"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "StreamBlocks Configuration",
+            "properties": {
+                "streamblocks.home": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "default": null,
+                    "description": "Specifies the folder path of StreamBlocks CAL compiler",
+                    "scope":"window"
+                }
+            }
+        }
     }
 }
