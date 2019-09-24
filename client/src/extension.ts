@@ -27,19 +27,21 @@ export function activate(context: ExtensionContext) {
 			});
 
 			let javaExecutablePath = findJavaExecutable('java');
-
+			// -- Fixed port for debugging
 			// grab a random port.
-			server.listen(() => {
+			server.listen(55127, () => {
 				// Start the child java process
+				/*
 				let options = { cwd: workspace.rootPath };
 
 				let args = [
 					'-jar',
-					path.resolve(context.extensionPath, '..', 'tycho', 'language-server', 'target', 'language-server-1.0-SNAPSHOT.jar'),
+					path.resolve(context.extensionPath, '..', 'streamblocks-tycho', 'language-server', 'target', 'language-server-1.0-SNAPSHOT.jar'),
 					server.address().port.toString()
 				]
 
 				let process = child_process.spawn(javaExecutablePath, args, options);
+				*/
 
 				// Send raw output to a file
 				if (!fs.existsSync(context.storagePath))
@@ -59,7 +61,7 @@ export function activate(context: ExtensionContext) {
 	// Options to control the language client
 	let clientOptions: LanguageClientOptions = {
 		// Register the server for plain text documents
-		documentSelector: ['plaintext'],
+		documentSelector: ['cal'],
 		synchronize: {
 			// Synchronize the setting section 'languageServerExample' to the server
 			configurationSection: 'languageServerExample',

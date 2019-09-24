@@ -7,7 +7,7 @@
 	"publisher": "streamblcoks",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/streamblocks"
+		"url": "https://github.com/streamblocks/streamblocks-vscode"
 	},
 	"engines": {
 		"vscode": "^1.33.0"

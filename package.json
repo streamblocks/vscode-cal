@@ -8,7 +8,7 @@
     "publisher": "streamblcoks",
     "repository": {
         "type": "git",
-        "url": "https://github.com/streamblocks/streamblocks-vscode-cal"
+        "url": "https://github.com/streamblocks/streamblocks-vscode"
     },
     "engines": {
         "vscode": "^1.33.0"
@@ -57,8 +57,8 @@
         }
     },
     "activationEvents": [
-		"onLanguage:cal"
-	],
+        "onLanguage:cal"
+    ],
     "main": "./client/out/extension",
     "scripts": {
         "vscode:prepublish": "cd client && npm run update-vscode && cd .. ",
