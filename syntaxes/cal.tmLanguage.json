@@ -587,7 +587,7 @@
 					"name": "keyword.control.cal"
 				}
 			},
-			"name": "meta.network.strcutre.statement.for.cal",
+			"name": "meta.network.structure.statement.for.cal",
 			"patterns": [
 				{
 					"include": "#comments"
@@ -610,13 +610,13 @@
 			"begin": "\\b(repeat|do)\\b\\s*",
 			"beginCaptures": {
 				"1": {
-					"name": "keyword.control.cal"
+					"name": "keyword.source.cal"
 				}
 			},
-			"end": "\\b(end)\\b\\s",
+			"end": "\\b(end)\\b",
 			"endCaptures": {
 				"1": {
-					"name": "keyword.control.cal"
+					"name": "keyword.source.cal"
 				}
 			},
 			"patterns": [
@@ -1088,7 +1088,7 @@
 					"name": "keyword.control.cal"
 				}
 			},
-			"end": "\\.*(?=(\\b(end)\\b))",
+			"end": "\\b(end)\\b",
 			"endCaptures": {
 				"1": {
 					"name": "keyword.control.cal"
@@ -1111,7 +1111,7 @@
 			]
 		},
 		"block-body": {
-			"name": "meta.procedure.body.cal",
+			"name": "meta.body.cal",
 			"begin": "(?x) (?:(do))\\b",
 			"beginCaptures": {
 				"1": {
