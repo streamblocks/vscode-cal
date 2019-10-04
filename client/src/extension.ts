@@ -29,9 +29,10 @@ export function activate(context: ExtensionContext) {
 			let javaExecutablePath = findJavaExecutable('java');
 			// -- Fixed port for debugging
 			// grab a random port.
-			server.listen(55127, () => {
+			//server.listen(55127, () => {
+				server.listen(() => {
 				// Start the child java process
-				/*
+				
 				let options = { cwd: workspace.rootPath };
 
 				let args = [
@@ -41,7 +42,7 @@ export function activate(context: ExtensionContext) {
 				]
 
 				let process = child_process.spawn(javaExecutablePath, args, options);
-				*/
+				
 
 				// Send raw output to a file
 				if (!fs.existsSync(context.storagePath))

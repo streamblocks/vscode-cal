@@ -858,7 +858,7 @@
 		"procedure": {
 			"name": "meta.procedure.cal",
 			"begin": "(?=\\w?[\\w\\s]*\\b(?:procedure)\\s+\\w+)",
-			"end": "\\b(end|endfunction)\\b",
+			"end": "\\b(end|endprocedure)\\b",
 			"endCaptures": {
 				"0": {
 					"name": "keyword.source.cal"
@@ -878,13 +878,10 @@
 						}
 					},
 					"match": "(procedure)\\s+(\\w+)",
-					"name": "meta.function.identifier.cal"
+					"name": "meta.procedure.identifier.cal"
 				},
 				{
 					"include": "#comments"
-				},
-				{
-					"include": "#code"
 				},
 				{
 					"include": "#local-variable-declaration"
@@ -902,7 +899,12 @@
 					"name": "keyword.source.cal"
 				}
 			},
-			"end": "\\.*(?=\\b(end)\\b)",
+			"end": "\\.*(?=(\\b(end)\\b))",
+			"endCaptures": {
+				"0": {
+					"name": "keyword.source.cal"
+				}
+			},
 			"patterns": [
 				{
 					"include": "#comments"
@@ -1086,7 +1088,7 @@
 					"name": "keyword.control.cal"
 				}
 			},
-			"end": "\\b(end)\\b",
+			"end": "\\.*(?=(\\b(end)\\b))",
 			"endCaptures": {
 				"1": {
 					"name": "keyword.control.cal"
