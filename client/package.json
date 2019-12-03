@@ -10,7 +10,7 @@
 		"url": "https://github.com/streamblocks/streamblocks-vscode"
 	},
 	"engines": {
-		"vscode": "^1.33.0"
+		"vscode": "^1.40.0"
 	},
 	"scripts": {
 		"update-vscode": "vscode-install",
