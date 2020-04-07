@@ -152,7 +152,7 @@
 					"name": "constant.other.cal"
 				},
 				"3": {
-					"name": "punctuation.terminator.namesapce.cal"
+					"name": "punctuation.terminator.namespace.cal"
 				}
 			},
 			"end": "\\b(end)\\b\\s",
@@ -177,6 +177,9 @@
 				},
 				{
 					"include": "#imports"
+				},
+				{
+					"include": "#user-types"
 				},
 				{
 					"include": "#actor"
@@ -560,7 +563,7 @@
 					"name": "keyword.control.cal"
 				}
 			},
-			"name": "meta.network.strcutre.statement.if.cal",
+			"name": "meta.network.structure.statement.if.cal",
 			"patterns": [
 				{
 					"include": "#comments"
@@ -953,10 +956,47 @@
 				}
 			]
 		},
-		"types": {
+		"user-types":{
+			"name": "meta.type.cal",
+			"begin": "(?=\\w?[\\w\\s]*\\b(?:type)\\s+\\w+)",
+			"end": "(end|endtype|\\;)",
+			"endCaptures": {
+				"0": {
+					"name": "keyword.source.cal"
+				}
+			},
 			"patterns": [
 				{
-					"match": "\\b(bool|int|uint|float|double)\\b",
+					"include": "#storage-modifiers"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "keyword.source.cal"
+						},
+						"2": {
+							"name": "name.user.type.cal"
+						}
+					},
+					"match": "(type)\\s+(\\w+)",
+					"name": "meta.type.identifier.cal"
+				},
+				{
+					"include": "#arguments"
+				},
+				
+				{
+					"include": "#comments"
+				},
+				{
+					"include":"#primitive-types"	
+				}
+			]
+		},
+		"primitive-types": {
+			"patterns": [
+				{
+					"match": "\\b(bool|int|uint|float|double|String)\\b",
 					"name": "storage.type.primitive.cal"
 				}
 			]
@@ -974,6 +1014,9 @@
 				},
 				{
 					"include": "#block-if"
+				},
+				{
+					"include": "#case"
 				},
 				{
 					"include": "#block-while"
@@ -1028,13 +1071,13 @@
 			"begin": "\\b(foreach)\\b",
 			"beginCaptures": {
 				"1": {
-					"name": "keyword.control.cal"
+					"name": "keyword.cal"
 				}
 			},
 			"end": "\\b(end|endforeach)\\b\\s",
 			"endCaptures": {
 				"1": {
-					"name": "keyword.control.cal"
+					"name": "keyword.cal"
 				}
 			},
 			"name": "meta.block.foreach.cal",
@@ -1053,7 +1096,7 @@
 				},
 				{
 					"match": "\\b(in)\\b",
-					"name": "keyword.control.cal"
+					"name": "keyword.cal"
 				}
 			]
 		},
@@ -1061,13 +1104,13 @@
 			"begin": "\\b(if)\\b",
 			"beginCaptures": {
 				"1": {
-					"name": "keyword.control.cal"
+					"name": "keyword.cal"
 				}
 			},
 			"end": "\\b(end|endif)\\b",
 			"endCaptures": {
 				"1": {
-					"name": "keyword.control.cal"
+					"name": "keyword.cal"
 				}
 			},
 			"name": "meta.block.if.cal",
@@ -1077,7 +1120,56 @@
 				},
 				{
 					"match": "\\b(then|else|elsif)\\b",
-					"name": "keyword.control.cal"
+					"name": "keyword.cal"
+				}
+			]
+		},
+		"case":{
+			"begin": "\\b(case)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.cal"
+				}
+			},
+			"end": "\\b(end|endcase)\\b",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.cal"
+				}
+			},
+			"name": "meta.block.case.cal",
+			"patterns": [
+				{
+					
+						"match": "\\b(of|guard)\\b",
+						"name": "keyword.do"
+					
+				},
+				{
+					"include": "#code"
+				},
+				{
+					"include": "#case-do"
+				}
+			]
+		},
+		"case-do":{
+			"begin": "\\b(do)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.cal"
+				}
+			},
+			"end": "\\b(end)\\b",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.cal"
+				}
+			},
+			"name": "meta.block.case-do.cal",
+			"patterns": [
+				{
+					"include": "#code"
 				}
 			]
 		},
@@ -1163,7 +1255,7 @@
 			"name": "meta.definition.variable.cal",
 			"patterns": [
 				{
-					"include": "#types"
+					"include": "#types-primitive"
 				},
 				{
 					"include": "#code"
@@ -1176,7 +1268,7 @@
 			"name": "meta.definition.variable.cal",
 			"patterns": [
 				{
-					"include": "#types"
+					"include": "#types-primitive"
 				},
 				{
 					"include": "#code"
