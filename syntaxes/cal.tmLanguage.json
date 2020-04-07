@@ -1149,12 +1149,35 @@
 					"include": "#code"
 				},
 				{
+					"include": "#case-semi"
+				},
+				{
 					"include": "#case-do"
 				}
 			]
 		},
 		"case-do":{
 			"begin": "\\b(do)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.cal"
+				}
+			},
+			"end": "\\b(end)\\b",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.cal"
+				}
+			},
+			"name": "meta.block.case-do.cal",
+			"patterns": [
+				{
+					"include": "#code"
+				}
+			]
+		},
+		"case-semi":{
+			"begin": ":",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.cal"
