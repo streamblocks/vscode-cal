@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CAL plug-in for Eclipse
+Bundle-SymbolicName: streamblocks.eclipse;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: streamblocks.eclipse.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Import-Package: org.osgi.framework
+Automatic-Module-Name: streamblocks.eclipse
+Bundle-Vendor: StreamBlocks
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.contenttype,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.lsp4e,
+ org.eclipse.lsp4j,
+ org.eclipse.lsp4j.jsonrpc,
+ org.eclipse.tm4e.core,
+ org.eclipse.tm4e.registry,
+ org.eclipse.tm4e.languageconfiguration,
+ org.eclipse.tm4e.ui,
+ org.eclipse.ui.genericeditor

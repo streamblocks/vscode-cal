@@ -1,0 +1,89 @@
+{
+    "name": "streamblocks-cal",
+    "displayName": "cal",
+    "description": "CAL Actor Language Plug-in",
+    "author": "EPFL VLSC",
+    "license": "GPL-3.0-or-later",
+    "version": "0.0.1",
+    "publisher": "StreamBlocks",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/streamblocks/streamblocks-vscode"
+    },
+    "engines": {
+        "vscode": "^1.49.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "activationEvents": [
+        "onLanguage:cal"
+    ],
+    "main": "out/extension",
+    "contributes": {
+        "languages": [
+            {
+                "id": "cal",
+                "aliases": [
+                    "CAL Actor Language",
+                    "CAL",
+                    "cal"
+                ],
+                "extensions": [
+                    ".cal",
+                    ".nl",
+                    ".CAL"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "cal",
+                "scopeName": "source.cal",
+                "path": "./syntaxes/cal.tmLanguage.json"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "CAL (StreamBlocks)",
+            "properties": {
+                "streamblocks-cal.compiler.path": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "default": "null",
+                    "description": "Path to StreamBlocks CAL compiler. If null, the extension will not be able to compile the code",
+                    "scope": "window"
+                },
+                "streamblocks-cal.language server.connection type": {
+                    "type": "string",
+                    "enum": [
+                        "process io",
+                        "socket"
+                    ],
+                    "default": "process io",
+                    "description": "Type of connection with CAL Language Server. If socket, the external language server needs to be running before",
+                    "scope": "window"
+                }
+            }
+        }
+    },
+    "devDependencies": {
+        "@types/node": "^13.13.25",
+        "@types/vscode": "^1.49.0",
+        "typescript": "^3.9.7",
+        "vscode-test": "^1.4.0"
+    },
+    "dependencies": {
+        "vsce": "^1.95.0",
+        "vscode-languageclient": "^6.1.3"
+    },
+    "scripts": {
+        "prepublish": "tsc -p ./src",
+        "compile": "tsc -p ./src",
+        "watch": "tsc -w -p ./src",
+        "update-vscode": "node ./node_modules/vscode/bin/install"
+    }
+}

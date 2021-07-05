@@ -1,0 +1,5 @@
+rootProject.name = 'streamblocks-ide'
+include 'xtext-language-server:streamblocks.cal'
+include 'xtext-language-server:streamblocks.cal.ide'
+include 'extensions:vscode'
+include 'extensions:theia'

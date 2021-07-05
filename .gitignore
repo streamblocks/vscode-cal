@@ -1,4 +1,26 @@
-out
+# Gradle
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# Eclipse
+.classpath
+.project
+.settings
+.metadata
+.launch
+bin
+
+# VS Code
+.vscode/
+.vscodeignore
+
+# Xtext / Xtend
+model
+src-gen
+xtend-gen
+.antlr*.jar
+
+# Node
 node_modules
-client/server
-.vscode-test
+out
