@@ -47,6 +47,22 @@ $ ./gradlew build
 
 The build consist of compiling Xtext project, packing the project as Uber JAR (Gradle [Shadow][6] Plug-in) and transfering the library to extensions (to be used in *standalone* case).
 
+Alternative way is to start language server as a remote *socket* server. It can be easily done by running customized Grade task:
+
+#### For Linux
+
+```
+$ ./gradlew run [--args="[--host "host address"][-- port "port number"]"]
+```
+
+#### For Windows
+
+```
+> ./gradlew.bat run [--args="[--host "host address"][-- port "port number"]"]
+```
+
+Task starts server application from built-in Xtext launcher class *SocketServerLauncher*. The connection can be configured via command line arguments (passed to Gradle task by `--args` option), namely `--host` for host address and `--port` for specific port (*0.0.0.0:5008* by default).
+
 ### VS Code Extension
 
 To just build and package the extension, you can run dedicated Gradle task:
@@ -89,7 +105,7 @@ To specify type of the connection with the language server use ***Language Serve
 
 ### Eclipse Theia
 
-To build and launch local Theia server use the dedicated launch script in `extensions\theia` directory:
+To build and launch local Theia server use the dedicated launch script in `extensions/theia` directory:
 
 > *Note: Make sure that `launch.sh` has permission to be executed*
 
