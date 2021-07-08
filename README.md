@@ -1,7 +1,7 @@
 
 <img src="https://github.com/streamblocks/streamblocks-vscode/blob/xtext-language-server/doc/streamblocks-logo.png" align="right"
-     alt="StreamBlocks Logo" width="120" height="94">
-# CAL Actor Language support plug-in for Visual Studio Code
+     alt="StreamBlocks Logo" width="80">
+# CAL Actor Language LSP extensions
 
 This reposiotry bundles a [Xtext][1]-based Language Server for CAL Actor language and multiple extensions to support various code editors ([Visual Studio Code][2], [Eclipse Theia][3], [Eclipse IDE][4] at the moment).
 
