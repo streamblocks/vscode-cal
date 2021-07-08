@@ -1,5 +1,5 @@
 
-<img src="https://github.com/streamblocks/streamblocks-vscode/doc/streamblocks-logo.png" align="right"
+<img src="https://github.com/streamblocks/streamblocks-vscode/blob/xtext-language-server/doc/streamblocks-logo.png" align="right"
      alt="StreamBlocks Logo" width="120" height="94">
 # CAL Actor Language support plug-in for Visual Studio Code
 
@@ -52,13 +52,13 @@ Alternative way is to start language server as a remote *socket* server. It can 
 #### For Linux
 
 ```
-$ ./gradlew run [--args="[--host "host address"][-- port "port number"]"]
+$ ./gradlew run [--args="[-host "host address"][- port "port number"]"]
 ```
 
 #### For Windows
 
 ```
-> ./gradlew.bat run [--args="[--host "host address"][-- port "port number"]"]
+> ./gradlew.bat run [--args="[-host "host address"][- port "port number"]"]
 ```
 
 Task starts server application from built-in Xtext launcher class *SocketServerLauncher*. The connection can be configured via command line arguments (passed to Gradle task by `--args` option), namely `--host` for host address and `--port` for specific port (*0.0.0.0:5008* by default).
